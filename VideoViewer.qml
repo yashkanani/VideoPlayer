@@ -1,9 +1,9 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtMultimedia 5.15
+import QtMultimedia
 import QtQuick.Layouts 1.12
 import QtQuick.Window 2.15
-
+import QtQuick.Dialogs
 
 
 Item {
@@ -42,13 +42,19 @@ Item {
             CustomIconButton {
                 id: playButton
                 source: "qrc:/icons/play.png"
-                onClicked:videoPlayer.play()
+                onClicked: videoPlayer.play()
             }
 
             CustomIconButton {
                 id: stopButton
                 source: "qrc:/icons/stop.png"
-                onClicked:videoPlayer.stop()
+                onClicked: videoPlayer.stop()
+            }
+
+            CustomIconButton {
+                id: openButton
+                source: "qrc:/icons/addfile.png"
+                onClicked: fileDialog.open()
             }
 
             CustomIconButton {
@@ -56,9 +62,13 @@ Item {
                 source: "qrc:/icons/exit.png"
                 onClicked: Qt.quit()
             }
-
         }
     }
 
-
+    FileDialog {
+        id: fileDialog
+        title: "Please choose a video file"
+        nameFilters: ["Video files (*.mp4 *.avi *.mkv *.mov *.wmv)"]
+        onAccepted: videoView.videoSource = selectedFile
+    }
 }

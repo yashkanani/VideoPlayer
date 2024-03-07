@@ -6,5 +6,6 @@
         <file>icons/stop.png</file>
         <file>icons/exit.png</file>
         <file>wids-workshop-2020.mp4</file>
+        <file>icons/addfile.png</file>
     </qresource>
 </RCC>

@@ -27,7 +27,8 @@ Item {
                     id: welcomeText
                     text: "Enter PIN code"
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-                    font.pixelSize: 15
+                    font.pixelSize: 18
+                    font.bold: true
                     color: "#1c344f"
                 }
 
@@ -39,10 +40,12 @@ Item {
                     border.color: "#1c344f"
                     border.width: 1
                     radius: 2
+
                     Text {
                         id: displayText
                         anchors.centerIn: parent
-                        text: pinpad.passwordString
+                        text: maskPassword(pinpad.passwordString)
+                        font.pixelSize: 18
                     }
                 }
 
@@ -103,6 +106,10 @@ Item {
                     }
                 }
             }
+    }
+
+    function maskPassword(password) {
+        return "*".repeat(password.length);
     }
 
     Connections {

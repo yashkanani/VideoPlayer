@@ -11,21 +11,31 @@ Item {
     width: mainWindow.width
     height: mainWindow.height
 
+
     property string videoSource: "qrc:/file_example_MP4_1920_18MG.mp4"
+
+    Rectangle {
+            anchors.fill: parent
+            color: "#1c344f"
+
 
     ColumnLayout {
         anchors.fill: parent
+
 
         Text {
             id: welcomeText
             text: "Welcome to Video Player"
             Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
             font.pixelSize: 24
+            color: "#f4f4f4"
         }
 
         Rectangle {
             Layout.preferredHeight: parent.height * 0.8
             Layout.fillWidth: true
+            color: "#DAE0E9"
+            radius: 20
 
             Video {
                 id: videoPlayer
@@ -64,6 +74,7 @@ Item {
             }
         }
     }
+}
 
     FileDialog {
         id: fileDialog

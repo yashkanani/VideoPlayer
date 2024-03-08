@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>file_example_MP4_1920_18MG.mp4</file>
-        <file>icons/pause.png</file>
         <file>icons/play.png</file>
         <file>icons/stop.png</file>
         <file>icons/exit.png</file>

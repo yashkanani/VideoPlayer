@@ -13,7 +13,7 @@ Window {
     {
         id: mainloader
         anchors.fill: parent
-        source: "VideoViewer.qml"
+        source: "PINPad.qml"
     }
 
     function changeScreen(value)

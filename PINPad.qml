@@ -2,77 +2,107 @@ import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
 
- Rectangle {
+Item {
     id: pinpad
     width: mainWindow.width
     height: mainWindow.height
-    visible: true
-    anchors.centerIn: parent
 
     property string passwordString: ""
     property string errorMessage: ""
 
     Rectangle {
-        id: displayRect
-        width: parent.width
-        height: parent.height / 6
-        color: "lightgrey"
+            id: pinComponentRect
+            anchors.fill: parent
+            color: "#DAE0E9"
 
-        Text {
-            id: displayText
-            text: pinpad.passwordString
-            anchors.centerIn: parent
-        }
-    }
 
-    GridLayout {
-        id: buttonsGrid
-        width: parent.width
-        height: parent.height - displayRect.height
-        rows: 4
-        columns: 3
-        anchors.top: displayRect.bottom
+            ColumnLayout {
+                anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        top: parent.top
+                        topMargin: parent.height /6
+                    }
 
-        Repeater {
-            model: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#"]
+                Text {
+                    id: welcomeText
+                    text: "Enter PIN code"
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+                    font.pixelSize: 15
+                    color: "#1c344f"
+                }
 
-            Button {
-                text: modelData
-                onClicked: {
-                    if (text !== "x") {
-                        pinpad.passwordString += text
-                    } else if (text === "x") {
-                        pinpad.passwordString = ""
+                Rectangle {
+                    id: displayRect
+                    Layout.preferredWidth: parent.width
+                    Layout.alignment: Qt.AlignHCenter
+                    height: 25
+                    border.color: "#1c344f"
+                    border.width: 1
+                    radius: 2
+                    Text {
+                        id: displayText
+                        anchors.centerIn: parent
+                        text: pinpad.passwordString
+                    }
+                }
+
+                Text {
+                    id: errorText
+                    anchors.top: displayRect.bottom
+                    anchors.right: parent.right
+                    text: pinpad.errorMessage
+                    font.bold: false
+                    font.pixelSize: 10
+                    color: "red"
+                    visible: pinpad.errorMessage !== ""
+                }
+
+
+                GridLayout {
+                    id: buttonsGrid
+                    Layout.alignment: Qt.AlignHCenter
+                    anchors.top: errorText.bottom
+                    rows: 4
+                    columns: 3
+                    anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            topMargin: parent.height /15
+                        }
+
+                    Repeater {
+                        model: [
+                            { number: "1", centerText: "", subText: ""},
+                            { number: "2", centerText: "", subText: "ABC" },
+                            { number: "3", centerText: "", subText: "DEF" },
+                            { number: "4", centerText: "", subText: "GHI" },
+                            { number: "5", centerText: "", subText: "JKL" },
+                            { number: "6", centerText: "", subText: "MNO" },
+                            { number: "7", centerText: "", subText: "PQRS" },
+                            { number: "8", centerText: "", subText: "TUV" },
+                            { number: "9", centerText: "", subText: "WXYZ" },
+                            { number: "", centerText: "Clear", subText: "" },
+                            { number: "0", centerText: "", subText: "" },
+                            { number: "", centerText: "Enter", subText: "" }
+                        ]
+
+                        KeypadDelegate {
+                            number: modelData.number
+                            centerText: modelData.centerText
+                            subText: modelData.subText
+                            onClicked: {
+                                pinpad.errorMessage = ""
+                                if (modelData.number !== "") {
+                                    pinpad.passwordString += modelData.number;
+                                } else if (modelData.centerText === "Clear") {
+                                    pinpad.passwordString = ""
+                                } else if (modelData.centerText === "Enter") {
+                                    passwordManager.checkPassword(pinpad.passwordString)
+                                }
+                            }
+                        }
                     }
                 }
             }
-        }
-
-        Button {
-            text: "clear"
-            onClicked: pinpad.passwordString = ""
-        }
-
-        Button {
-            text: "enter"
-            onClicked: passwordManager.checkPassword(pinpad.passwordString)
-        }
-    }
-
-    Rectangle {
-        id: errorRect
-        width: parent.width
-        height: parent.height
-        color: "transparent"
-        visible: pinpad.errorMessage !== ""
-
-        Text {
-            text: pinpad.errorMessage
-            font.bold: true
-            font.pixelSize: 20
-            color: "red"
-            anchors.centerIn: parent
-        }
     }
 
     Connections {
@@ -87,4 +117,5 @@ import QtQuick.Controls 2.15
             pinpad.errorMessage = errorText
         }
     }
+
 }

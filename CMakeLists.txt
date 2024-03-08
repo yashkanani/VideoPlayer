@@ -29,6 +29,7 @@ qt_add_qml_module(appVideoPlayer
         VideoViewer.qml
         PINPad.qml
         CustomIconButton.qml
+        KeypadDelegate.qml
 )
 
 

@@ -32,7 +32,7 @@ Item {
         }
 
         Rectangle {
-            Layout.preferredHeight: parent.height * 0.8
+            Layout.preferredHeight: parent.height * 0.85
             Layout.fillWidth: true
             color: "#DAE0E9"
             radius: 20

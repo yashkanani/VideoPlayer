@@ -19,6 +19,7 @@ Item {
         border.color: Qt.lighter(color, 1.1)
 
 
+
         Text {
             id: numberText
             text: gridcell.number
@@ -60,7 +61,12 @@ Item {
             anchors.fill: parent
             id:mousearea
             hoverEnabled: true;
-            onClicked: {
+            onPressed: {
+                itemId.opacity = 0.8
+            }
+
+            onReleased: {
+                itemId.opacity = 1.0
                 gridcell.clicked()
             }
         }

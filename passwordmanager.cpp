@@ -8,8 +8,6 @@ PasswordManager::PasswordManager(QObject *parent) : QObject(parent)
 
 void PasswordManager::checkPassword(const QString &password)
 {
-    qDebug() << "Password entered: " << password;
-
     if (password.isEmpty()){
         emit incorrectPasswordEntered("Please enter the PIN");
         return;
